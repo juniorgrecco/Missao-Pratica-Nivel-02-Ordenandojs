@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<link
+			href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css"
+			rel="stylesheet"
+			integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3"
+			crossorigin="anonymous"
+		/>
+		<title>Catálogo de Receitas</title>
+	</head>
+	<body onload="preencheCatalogo()">
+		<main class="container-fluid bg-warning">
+			<div class="flex-wrap" id="pnlCatalogo"></div>
+		</main>
+		<script>
+			const getListaIngredientes = (receita) => {
+				const ingredients = receita.ingredientes;
+
+				return `<ul>${ingredients.reduce((text, value) => (text += '<li>' + value + '</li>'), '')}</ul>`;
+			};
+
+			const getCard = (receita) => {
+				return `<div class="card" style="width: 250px"><img src="${
+					receita.imagem
+				}" class="card-img-top" /><div class="card-body"><p class="card-title">${
+					receita.titulo
+				}</p><div class="card-text">${getListaIngredientes(receita)}<hr />${
+					receita.preparo
+				}</div></div></div>`;
+			};
+
+			const preencheCatalogo = () => {
+				console.log('loading...');
+				const json = JSON.stringify({
+					receitas: [
+						{
+							titulo: 'Torta de Frango',
+							imagem: './assets/receitas/diliara-garifullina-Uju0eqW7G7U-unsplash.jpg',
+							preparo:
+								'1. Preaqueça o forno a 180°C.\n2. Prepare a massa da torta...\n3. Asse no forno por 30 minutos.',
+							ingredientes: [
+								'2 xícaras de frango cozido e desfiado',
+								'1 xícara de milho',
+								'1 xícara de ervilhas',
+								'Massa de torta pronta',
+								'Sal e pimenta a gosto',
+							],
+						},
+						{
+							titulo: 'Salada Caesar',
+							imagem: './assets/receitas/tania-melnyczuk-xeTv9N2FjXA-unsplash.jpg',
+							preparo: '1. Lave e rasgue as folhas de alface romana...\n2. Regue com molho Caesar a gosto.',
+							ingredientes: ['Alface romana', 'Croutons', 'Queijo parmesão ralado', 'Molho Caesar'],
+						},
+						{
+							titulo: 'Sopa de Abóbora',
+							imagem: './assets/receitas/ella-olsson-fxJTl_gDh28-unsplash.jpg',
+							preparo:
+								'1. Descasque e corte a abóbora...\n2. Cozinhe até ficar macia...\n3. Bata no liquidificador...',
+							ingredientes: [
+								'500g de abóbora',
+								'1 cebola',
+								'1 dente de alho',
+								'Caldo de galinha',
+								'Creme de leite',
+							],
+						},
+						{
+							titulo: 'Pudim de Leite',
+							imagem: './assets/receitas/matheus-ferrero-Doyf6UvvAYU-unsplash.jpg',
+							preparo:
+								'1. Prepare a calda de caramelo...\n2. Misture o leite condensado...\n3. Asse em banho-maria...',
+							ingredientes: [
+								'1 lata de leite condensado',
+								'3 ovos',
+								'1 litro de leite',
+								'Açúcar para a calda',
+							],
+						},
+						{
+							titulo: 'Macarrão Alfredo',
+							imagem: './assets/receitas/ikhsan-baihaqi-pbc2wXbQYpI-unsplash.jpg',
+							preparo:
+								'1. Cozinhe o macarrão...\n2. Aqueça o creme de leite...\n3. Misture o queijo parmesão...',
+							ingredientes: [
+								'200g de macarrão',
+								'200ml de creme de leite',
+								'50g de queijo parmesão ralado',
+								'Sal e pimenta a gosto',
+							],
+						},
+					],
+				});
+
+				const container = document.getElementById('pnlCatalogo');
+
+				const recipes = JSON.parse(json);
+
+				container.innerHTML = recipes.receitas.reduce((text, recipe) => text + getCard(recipe), '');
+			};
+		</script>
+	</body>
+</html>

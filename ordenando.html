@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Ordenando</title>
+	</head>
+	<body>
+		<ul id="valores" style="list-style: none"></ul>
+		<input type="number" id="valor" style="color: black" />
+		<button onclick="add()" style="color: black">Adicionar</button>
+		<select id="sort-type" style="color: black">
+			<option value="bubble">Bubble Sort</option>
+			<option value="selection">Selection Sort</option>
+			<option value="quick">Quick Sort</option>
+		</select>
+		<button onclick="ordenar()" style="color: black">Ordenar</button>
+		<button onclick="misturar()" style="color: black">Misturar</button>
+		<script src="./ordenando.js"></script>
+		<script>
+			const add = () => {
+				const input = document.getElementById('valor');
+				const list = document.getElementById('valores');
+				const node = document.createElement('li');
+
+				if (input.value) {
+					node.textContent = input.value;
+					list.appendChild(node);
+				}
+			};
+
+			const misturar = () => {
+				const list = document.getElementById('valores');
+				const values = list.getElementsByTagName('li');
+				const vector = [];
+
+				for (let index = 0; index < values.length; index++) {
+					const node = values[index];
+					const value = +node.textContent;
+					vector.push(value);
+				}
+
+				shuffle(vector, 10);
+
+				vector.map((value, index) => {
+					values[index].textContent = value;
+				});
+			};
+
+			const ordenar = () => {
+				const sorts = {
+					bubble: (vector) => bubble_sort(vector),
+					selection: (vector) => selection_sort(vector),
+					quick: (vector) => quick_sort(vector),
+				};
+
+				const list = document.getElementById('valores');
+				const values = list.getElementsByTagName('li');
+				const sortType = document.getElementById('sort-type');
+				const vector = [];
+
+				for (let index = 0; index < values.length; index++) {
+					const node = values[index];
+					const value = +node.textContent;
+					vector.push(value);
+				}
+
+				console.log(vector);
+				console.log(sortType.value);
+				sorts[sortType.value](vector);
+				console.log(vector);
+
+				vector.map((value, index) => {
+					values[index].textContent = value;
+				});
+			};
+		</script>
+	</body>
+</html>
